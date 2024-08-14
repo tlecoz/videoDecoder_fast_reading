@@ -31,4 +31,4 @@ mp4Decoder.onFrameReady = (bmp:ImageBitmap)=>{
 
 mp4Decoder.onReadComplete = ()=>{ console.log("complete");}
 
-mp4Decoder.init("./bbb.mp4")
+mp4Decoder.init("./bbb.mp4",{resizeWidth:640,resizeHeight:360,resizeQuality:"pixelated"})
