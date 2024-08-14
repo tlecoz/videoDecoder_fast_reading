@@ -187,8 +187,7 @@ export class Mp4VideoDecoder {
                     videoFrame.close();
                     
                     this.clearSample(this.nbFrameCreated++);
-                    //console.log("frameId = ",frameId+" vs "+this.nbSampleTotal)
-                    
+                   
                     if(this.nbFrameCreated == this.nbSampleTotal && this.autoCloseDecoder){
                         setTimeout(()=>{
                             console.log("CLOSE DECODER")
@@ -238,7 +237,6 @@ export class Mp4VideoDecoder {
 
         //handle samples stack ----------------------------------- 
         if(this.sampleBuffer.length < this.nbBufferizedSampleMin){
-            //console.log(this.nbSampleReceived+" + "+this.sampleBuffer.length+" < "+this.nbSampleTotal)
             if(this.nbSampleReceived + this.sampleBuffer.length < this.nbSampleTotal){
                 this.resumeDecoding();
             }
@@ -246,7 +244,6 @@ export class Mp4VideoDecoder {
 
         //handle chunk stack ------------------------------------
 
-        //console.log("sampleBuffer.length: ",this.sampleBuffer.length," ,nbSampleUsed: ",this.nbSampleUsed," ,nbFrameCreated: ",this.nbFrameCreated)
         if(this.sampleBuffer.length > 0 && this.nbSampleUsed < this.nbSampleTotal && this.nbSampleUsed - this.nbFrameCreated < this.frameBufferMaxLength && this.frameBuffer.length < this.frameBufferMaxLength){
             let dist = this.frameBufferMaxLength - (this.nbSampleUsed - this.nbFrameCreated);
             let i,nb = Math.min(dist,this.sampleBuffer.length);
@@ -257,8 +254,6 @@ export class Mp4VideoDecoder {
             for(i=0;i<nb;i++){
                 sample = this.sampleBuffer.shift();
                 
-                //console.log("sample = ",sample)
-                
                 type = sample.is_sync ? "key" : "delta";
                 this.videoDecoder.decode(new window["EncodedVideoChunk"]({
                     type: type,
@@ -268,11 +263,9 @@ export class Mp4VideoDecoder {
                 }));
             }
             if(sample){
-                //console.log(sample)
                 this.nbSampleUsed = sample.number;
             }
 
-            //this.nbSampleUsed += nb;
         }else{
             if(this.nbSampleTotal > 0 && this.nbSampleUsed == this.nbSampleTotal && !this.flushHasBeenCalled){
                 this.flushHasBeenCalled = true;
@@ -292,13 +285,10 @@ export class Mp4VideoDecoder {
             this.nbFrameUsed++;
 
             if(this.onFrameReady) this.onFrameReady(bmp);
-
             if(this.closeFrameAfterReading) bmp.close();
 
-           // console.log("nbFrameUsed = ",this.nbFrameUsed)
-            if(this.nbFrameUsed == this.nbSampleTotal){
+            if(this.nbFrameUsed >= this.nbSampleTotal-1){
                 this.readComplete = true;
-                //console.log("onReadComplete")
                 if(this.onReadComplete) this.onReadComplete();
             }
         }else{

@@ -1,3 +1,6 @@
+A working example showing how to read a MP4 as fast as possible using WebCodec
+
+```
 import { Mp4VideoDecoder } from "./MP4VideoDecoder";
 
 const fpsTxt = document.body.appendChild(document.createElement("div"));
@@ -32,3 +35,5 @@ mp4Decoder.onFrameReady = (bmp:ImageBitmap)=>{
 mp4Decoder.onReadComplete = ()=>{ console.log("complete");}
 
 mp4Decoder.init("./bbb.mp4")
+
+```
