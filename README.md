@@ -37,3 +37,10 @@ mp4Decoder.onReadComplete = ()=>{ console.log("complete");}
 mp4Decoder.init("./bbb.mp4")
 
 ```
+
+How to run : 
+
+```
+npm install 
+npm run dev
+```
