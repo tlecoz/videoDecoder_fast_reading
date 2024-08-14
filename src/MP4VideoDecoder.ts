@@ -321,7 +321,7 @@ export class Mp4VideoDecoder {
             var file = this.file;
             let reader = response.body.getReader();
             let started = false;
-            let pct:number;
+           
             let push = ()=>{
                 return reader.read().then((result:any) => {
                     const { done, value } = result;

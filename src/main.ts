@@ -13,7 +13,7 @@ mp4Decoder.onReadComplete = ()=>{
 
 let time:number;
 let fps = 0;
-let timeout;
+
 mp4Decoder.onFrameReady = (bmp:ImageBitmap)=>{
   if(new Date().getTime() - time >= 1000){
       time += 1000;
